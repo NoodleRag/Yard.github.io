@@ -1,0 +1,194 @@
+---
+layout: default
+---
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="{{ '/' | relative_url }}">All Walks</a>
+  <span class="sep">›</span>
+  {% if page.trail %}<a href="{{ '/walks/' | append: page.trail | slugify | relative_url }}">{{ page.trail }}</a><span class="sep">›</span>{% endif %}
+  {{ page.title }}
+</div>
+
+<div class="layout">
+
+  <!-- ── MAIN POST ── -->
+  <main>
+    <article class="post-card">
+
+      <!-- HEADER -->
+      <header class="post-header">
+        <div class="post-tags">
+          <span class="tag featured">Trip Report</span>
+          {% for tag in page.tags %}<a href="#" class="tag {% if forloop.index == 1 %}trail{% endif %}">{{ tag }}</a>{% endfor %}
+        </div>
+        <h1 class="post-title">{{ page.title }}</h1>
+        {% if page.subtitle %}<p class="post-subtitle">{{ page.subtitle }}</p>{% endif %}
+        <div class="post-meta">
+          <div class="meta-author-block">
+            <div class="meta-byline">{{ site.author }}</div>
+            <div class="meta-date">{{ page.date | date: "%-d %B %Y" }}</div>
+          </div>
+          <div class="meta-stats">
+            {% if page.stats.distance %}
+            <span class="stat-pill">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+              {{ page.stats.distance }} km
+            </span>
+            {% endif %}
+            {% if page.stats.duration %}
+            <span class="stat-pill">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              {{ page.stats.duration }}
+            </span>
+            {% endif %}
+          </div>
+        </div>
+      </header>
+
+      <!-- HERO -->
+      {% if page.hero_image %}
+      <div class="hero-wrap">
+        <img src="{{ page.hero_image | relative_url }}" alt="{{ page.hero_caption | default: page.title }}">
+        {% if page.hero_caption %}
+        <div class="hero-caption">↑ {{ page.hero_caption }}</div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <!-- STATS STRIP -->
+      {% if page.stats %}
+      <div class="stats-strip">
+        {% if page.stats.distance %}
+        <div class="stat-item">
+          <span class="stat-value">{{ page.stats.distance }}</span>
+          <span class="stat-label">km total</span>
+        </div>
+        {% endif %}
+        {% if page.stats.duration %}
+        <div class="stat-item">
+          <span class="stat-value">{{ page.stats.duration }}</span>
+          <span class="stat-label">moving time</span>
+        </div>
+        {% endif %}
+        {% if page.stats.max_elevation %}
+        <div class="stat-item">
+          <span class="stat-value">{{ page.stats.max_elevation }}m</span>
+          <span class="stat-label">max elevation</span>
+        </div>
+        {% endif %}
+        {% if page.stats.avg_hr %}
+        <div class="stat-item">
+          <span class="stat-value">{{ page.stats.avg_hr }}</span>
+          <span class="stat-label">avg heart rate</span>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <!-- BODY CONTENT (written in Markdown) -->
+      <div class="post-body">
+        {{ content }}
+      </div>
+
+    </article>
+  </main>
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+
+    <!-- Trail Info -->
+    <div class="sidebar-card">
+      <div class="sidebar-title">Trail Information</div>
+      <div class="trail-info">
+        {% if page.trail_info.trail %}
+        <div class="info-row"><span class="info-key">Trail</span><span class="info-val">{{ page.trail_info.trail }}</span></div>
+        {% endif %}
+        {% if page.trail_info.section %}
+        <div class="info-row"><span class="info-key">Section</span><span class="info-val">{{ page.trail_info.section }}</span></div>
+        {% endif %}
+        {% if page.trail_info.part_of %}
+        <div class="info-row"><span class="info-key">Part of</span><span class="info-val">{{ page.trail_info.part_of }}</span></div>
+        {% endif %}
+        {% if page.trail_info.region %}
+        <div class="info-row"><span class="info-key">Region</span><span class="info-val">{{ page.trail_info.region }}</span></div>
+        {% endif %}
+        {% if page.stats.distance %}
+        <div class="info-row"><span class="info-key">Distance</span><span class="info-val">{{ page.stats.distance }} km</span></div>
+        {% endif %}
+        {% if page.trail_info.duration_range %}
+        <div class="info-row"><span class="info-key">Duration</span><span class="info-val">{{ page.trail_info.duration_range }}</span></div>
+        {% endif %}
+        {% if page.stats.max_elevation %}
+        <div class="info-row"><span class="info-key">Max Elevation</span><span class="info-val">{{ page.stats.max_elevation }} m</span></div>
+        {% endif %}
+        {% if page.trail_info.difficulty %}
+        <div class="info-row">
+          <span class="info-key">Difficulty</span>
+          <div>
+            <div class="info-val warn" style="margin-bottom:0.2rem;">{{ page.trail_info.difficulty }}</div>
+            <div class="difficulty-bar">
+              {% assign filled = page.trail_info.difficulty_score | default: 3 %}
+              {% for i in (1..5) %}
+                <div class="diff-seg {% if i <= filled %}filled{% endif %}"></div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if page.trail_info.dogs %}
+        <div class="info-row"><span class="info-key">Dogs</span><span class="info-val {% if page.trail_info.dogs == 'Yes' %}good{% else %}warn{% endif %}">{{ page.trail_info.dogs }}</span></div>
+        {% endif %}
+        {% if page.trail_info.trail_type %}
+        <div class="info-row"><span class="info-key">Trail Type</span><span class="info-val">{{ page.trail_info.trail_type }}</span></div>
+        {% endif %}
+        {% if page.trail_info.start %}
+        <div class="info-row"><span class="info-key">Start</span><span class="info-val">{{ page.trail_info.start }}</span></div>
+        {% endif %}
+        {% if page.trail_info.end %}
+        <div class="info-row"><span class="info-key">End</span><span class="info-val">{{ page.trail_info.end }}</span></div>
+        {% endif %}
+        {% if page.trail_info.best_season %}
+        <div class="info-row"><span class="info-key">Season</span><span class="info-val good">{{ page.trail_info.best_season }}</span></div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Gear -->
+    {% if page.gear %}
+    <div class="sidebar-card">
+      <div class="sidebar-title">What We Carried</div>
+      <div class="gear-list">
+        {% for item in page.gear %}
+        <div class="gear-item">{{ item }}</div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Related Posts -->
+    {% assign related = site.posts | where_exp: "post", "post.url != page.url" | limit: 4 %}
+    {% if related.size > 0 %}
+    <div class="sidebar-card">
+      <div class="sidebar-title">More Walks</div>
+      <div class="related-list">
+        {% for post in related %}
+        <a href="{{ post.url | relative_url }}" class="related-item">
+          <div class="related-item-title">{{ post.title }}</div>
+          <div class="related-item-meta">{{ post.stats.distance }} km &nbsp;·&nbsp; {{ post.date | date: "%b %Y" }}</div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+  </aside>
+
+</div><!-- /layout -->
+
+<!-- MAP (rendered if gpx_path is set) -->
+{% if page.gpx_path %}
+<script>
+  window.TRAIL_GPX = "{{ page.gpx_path | relative_url }}";
+</script>
+{% endif %}

@@ -1,0 +1,29 @@
+title: "Trail Journal"
+description: "A personal record of walks, routes and film photography from South Australia."
+author: "Aaron Yard"
+baseurl: "https://aaronyard.com"          
+url: "https://aaronyard.com"             
+
+# Build
+markdown: kramdown
+permalink: /walks/:year/:month/:day/:title/
+timezone: Australia/Adelaide
+
+# Collections
+collections:
+  posts:
+    output: true
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "walk"
+
+# Exclude from build
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock

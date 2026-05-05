@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <a href="{{ '/' | relative_url }}" class="site-logo">Trail<span>Journal</span></a>
+    <ul class="nav-links">
+      <li><a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>All Walks</a></li>
+      <li><a href="{{ '/about/' | relative_url }}" {% if page.url contains 'about' %}class="active"{% endif %}>About</a></li>
+    </ul>
+  </header>
+
+  {{ content }}
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    {{ site.title }} &nbsp;·&nbsp; {{ site.author }} &nbsp;·&nbsp; South Australia
+    &nbsp;·&nbsp; Built with <a href="https://jekyllrb.com">Jekyll</a> &amp; hosted on <a href="https://pages.github.com">GitHub Pages</a>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="{{ '/assets/js/map.js' | relative_url }}"></script>
+
+</body>
+</html>
